@@ -172,9 +172,9 @@ int main()
 
         {
             std::vector<std::unique_ptr<std::string>> v;
-            v.emplace_back(std::make_unique<std::string>("aa"));
-            v.emplace_back(std::make_unique<std::string>("bb"));
-            v.emplace_back(std::make_unique<std::string>("cc"));
+            v.emplace_back("aa");
+            v.emplace_back("bb");
+            v.emplace_back("cc");
             //Распечатайте все строки
             for(auto &s : v)
             {
@@ -188,9 +188,9 @@ int main()
          //следующим образом (например, добавить указанный суффикс: "AAA" -> "AAA_1")
 
             std::vector<std::unique_ptr<std::string>> v;
-            v.emplace_back(std::make_unique<std::string>("aa"));
-            v.emplace_back(std::make_unique<std::string>("bb"));
-            v.emplace_back(std::make_unique<std::string>("cc"));
+            v.emplace_back("aa");
+            v.emplace_back("bb");
+            v.emplace_back("cc");
 
             addsufix(v, "_1");
 
@@ -228,7 +228,13 @@ int main()
             //освобождения памяти
 
             std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
-            std::unique_ptr<std::string*[], decltype(&my_deleter)> unptr (arStrPtr, my_deleter);
+            auto lamb = [s = std::size(arStrPtr)](std::string** x){
+                    for(size_t i = 0; i < s; i++)
+                    {
+                        delete x[i];
+                    }
+        };
+            std::unique_ptr<std::string*[], decltype(lamb)> unptr (arStrPtr, lamb);
 
         }
 
@@ -281,11 +287,12 @@ int main()
         //свою строчку
         //Подсказка: строчки удобно записывать в файл посредством функции fputs()
 
-        std::FILE * fp = std::fopen("WriterTest.txt", "w");
+        const char* fileName = "WriterTest.txt";
 
-        std::shared_ptr<std::FILE> fpSh (fp, std::fclose);
+        std::shared_ptr<std::FILE> fpSh (std::fopen(fileName, "w"), std::fclose);
+        //std::shared_ptr<std::FILE> fpSh2 = fpSh;
 
-        if(fpSh.get())
+        if(fpSh)
         {
             for(int i = 0; i < 10; i++)
             {

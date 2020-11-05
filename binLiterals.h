@@ -15,10 +15,11 @@ constexpr int mystrlen(const char* s)
 
 constexpr int operator"" _b(const char* s)
 {
+    // return constexpr func(s, 0);
     int a = 0;
     if(*s=='1')
     {
-        a = pow(2, mystrlen(s)-1);
+        a = pow(2, mystrlen(s)-1);  //можно сдвигом побитовым
     }
     return *s ? a + operator"" _b(s + 1) : 0;
 }
