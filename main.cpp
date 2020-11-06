@@ -80,7 +80,7 @@ int main()
 
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
+
     //Задание 3a. Перевод с помощью пользовательского литерала из двоичного представления строкового
     //в значение, например: строку "100000000" -> в значение 256
     //Проверить результат посредством префикса 0b
@@ -101,7 +101,7 @@ int main()
         {
             std::cout<<"\nusers literals _b - TRUE \n";
         }
-
+        //std::cout<<"\nLOOK\n"<<101_b;
 
 
     }
@@ -172,15 +172,14 @@ int main()
 
         {
             std::vector<std::unique_ptr<std::string>> v;
-            v.emplace_back("aa");
-            v.emplace_back("bb");
-            v.emplace_back("cc");
+            v.emplace_back(new std::string("aa"));
+            v.emplace_back(new std::string("bb"));
+            v.emplace_back(new std::string("cc"));
             //Распечатайте все строки
             for(auto &s : v)
             {
                 std::cout << *s <<'\n';
             }
-
          //??? Уничтожение динамически созданных объектов?
         } //???
 
@@ -188,9 +187,9 @@ int main()
          //следующим образом (например, добавить указанный суффикс: "AAA" -> "AAA_1")
 
             std::vector<std::unique_ptr<std::string>> v;
-            v.emplace_back("aa");
-            v.emplace_back("bb");
-            v.emplace_back("cc");
+            v.emplace_back(new std::string("aa"));
+            v.emplace_back(new std::string("bb"));
+            v.emplace_back(new std::string("cc"));
 
             addsufix(v, "_1");
 
@@ -208,7 +207,7 @@ int main()
             //с элементами std::string
             //С помощью unique_ptr::operator[] заполните обернутый массив значениями
             //Когда происходит освобождения памяти?
-            size_t n = 3;
+            const size_t n = 3;
             std::unique_ptr<std::string[]> strP(new std::string[n]);
             strP[0] = "QQQ";
             strP[1] = "WWW";
@@ -227,14 +226,14 @@ int main()
             //Реализуйте пользовательскую delete-функцию (функтор) для корректного
             //освобождения памяти
 
-            std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
-            auto lamb = [s = std::size(arStrPtr)](std::string** x){
-                    for(size_t i = 0; i < s; i++)
-                    {
-                        delete x[i];
-                    }
-        };
-            std::unique_ptr<std::string*[], decltype(lamb)> unptr (arStrPtr, lamb);
+//            std::string* arStrPtr[] = { new std::string("aa"), new std::string("bb"), new std::string("cc") };
+//            auto lamb = [s = std::size(arStrPtr)](std::string** x){
+//                    for(size_t i = 0; i < s; i++)
+//                    {
+//                        delete x[i];
+//                    }
+//            };
+//            std::unique_ptr<std::string*[], decltype(lamb)> unptr (arStrPtr, lamb);
 
         }
 
@@ -255,7 +254,6 @@ int main()
                       std::inserter(lu, lu.end()));
 
         }
-
 
     }
 
