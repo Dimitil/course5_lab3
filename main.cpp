@@ -119,6 +119,7 @@ int main()
         if ( sBin == "100000000"s)
         {
             std::cout << "\nuser literals _toBinStr TRUE \n";
+            //std::cout << 33_toBinStr;
         }
 
     }

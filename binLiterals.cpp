@@ -7,7 +7,7 @@ std::string operator"" _toBinStr(unsigned long long n)
     do
     {
         result = std::to_string(n % 2) + result;//
-        n = n / 2;      //можно побитовыми операциями
+        n = n >> 1;      //можно побитовыми операциями
     } while (n > 0);
 
     return result;
